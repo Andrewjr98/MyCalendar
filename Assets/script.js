@@ -72,7 +72,7 @@ function saveData(){
 }
 function displayData(){
     dayPlanned.forEach(funtion(_thisHour) {
-        $(`#${_thisHour.id}`).val(_thisHour.reminder);
+        $(`#${thisHour.id}`).val(thisHour.reminder);
     })
 }
 function init(){
@@ -86,5 +86,51 @@ function init(){
 headerData();
 
 dayPlanned.forEach(function(thisHour){
-    var hour
+    var hour = $("<form>").attr({
+        "class": "row";
+    });
+    $(".container").append(hour);
+    var hourContainer = $("<div>")
+    .text(${thisHour.hour}${thisHour.meridiem})
+    .attr({
+        "class": "col-md-2 hour"
+    });
+    var hourText = $("<div>")
+    .attr({
+        "class": "col-md-8 desciption p-0"
+    });
+   var plan= $("<textarea>");
+   hourText.append(plan)
+   plan.attr("id", thisHour.id)
+   if (thisHour.time< moment().format("HH")){
+    plan.attr({
+        "class": "past"
+    })
+   } else if (thisHour.time === moment().format("HH")){
+    plan.attr({
+        "class": "present"
+    })
+   }else if (thisHour.time > moment().format("HH")){
+    plan.attr({
+        "class": "future"
+    });
+  }
+    var saveButton = $("<i class='far fa-save fa-lg'></i>")
+   savePlanner = $("<button>")
+   .attr({
+    "class": "col-md-1 saveBtn"
+   });
+savePlanner.append(saveButton);
+hour.append(hourContainer, hourText, savePlanner);
+}) 
+
+init();
+
+$(".saveBtn").on("click", function(event){
+    event.preventDefault();
+    var save = $(this).siblings("description").children(".future").attr("id");
+    dayPlanned[save].reminder = $(this).siblings(".description").children(".future").val();
+    console.log(save);
+    saveData();
+    displayData();
 })
