@@ -71,9 +71,9 @@ function saveData(){
     localStorage.setItem("dayPlanned",JSON.stringify(dayPlanned));
 }
 function displayData(){
-    dayPlanned.forEach(funtion(_thisHour) {
-        $(`#${thisHour.id}`).val(thisHour.reminder);
-    })
+    dayPlanned.forEach(function(thisHour){
+        $("#thisHour").val(thisHour.reminder)
+})
 }
 function init(){
     var storedData = JSON.parse(localStorage.getitem("dayPlanned"));
@@ -87,14 +87,14 @@ headerData();
 
 dayPlanned.forEach(function(thisHour){
     var hour = $("<form>").attr({
-        "class": "row";
+        "class": "row"
     });
     $(".container").append(hour);
     var hourContainer = $("<div>")
-    .text(${thisHour.hour}${thisHour.meridiem})
+    .text($(thisHour.hour).$(thisHour.meridiem)
     .attr({
         "class": "col-md-2 hour"
-    });
+    }));
     var hourText = $("<div>")
     .attr({
         "class": "col-md-8 desciption p-0"
