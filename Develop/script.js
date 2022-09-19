@@ -63,3 +63,28 @@ var dayPlanned = [{
 },
 
 ]
+function headerData(){
+    var currentDate= moment().format('dddd,MMMM Do');
+    $("#currentDay").text(currentDate);
+}
+function saveData(){
+    localStorage.setItem("dayPlanned",JSON.stringify(dayPlanned));
+}
+function displayData(){
+    dayPlanned.forEach(funtion(_thisHour) {
+        $(`#${_thisHour.id}`).val(_thisHour.reminder);
+    })
+}
+function init(){
+    var storedData = JSON.parse(localStorage.getitem("dayPlanned"));
+    if (storedData){
+        dayPlanned = storedData;
+    }
+    saveData();
+    displayData();
+}
+headerData();
+
+dayPlanned.forEach(function(thisHour){
+    var hour
+})
