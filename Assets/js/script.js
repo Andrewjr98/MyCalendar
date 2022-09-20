@@ -68,15 +68,18 @@ function headerData(){
     $("#currentDay").text(currentDate);
 }
 function saveData(){
+    console.log(dayPlanned)
     localStorage.setItem("dayPlanned",JSON.stringify(dayPlanned));
 }
 function displayData(){
     dayPlanned.forEach(function(thisHour){
-        $("#thisHour").val(thisHour.reminder)
+        console.log(thisHour)
+        $("#"+thisHour.id).val(thisHour.reminder)
+    
 })
 }
 function init(){
-    var storedData = JSON.parse(localStorage.getitem("dayPlanned"));
+    var storedData = JSON.parse(localStorage.getItem("dayPlanned"));
     if (storedData){
         dayPlanned = storedData;
     }
@@ -91,13 +94,13 @@ dayPlanned.forEach(function(thisHour){
     });
     $(".container").append(hour);
     var hourContainer = $("<div>")
-    .text($(thisHour.hour).$(thisHour.meridiem)
+    .text(thisHour.hour + thisHour.meridiem)
     .attr({
         "class": "col-md-2 hour"
-    }));
+    });
     var hourText = $("<div>")
     .attr({
-        "class": "col-md-8 desciption p-0"
+        "class": "col-md-8 description p-0"
     });
    var plan= $("<textarea>");
    hourText.append(plan)
@@ -126,11 +129,12 @@ hour.append(hourContainer, hourText, savePlanner);
 
 init();
 
-$(".saveBtn").on("click", function(event){
+$(document).on("click", ".saveBtn",function(event){
     event.preventDefault();
-    var save = $(this).siblings("description").children(".future").attr("id");
-    dayPlanned[save].reminder = $(this).siblings(".description").children(".future").val();
-    console.log(save);
+    var save = $(this).siblings(".description").children()[0].getAttribute("id");
+    console.log($(this).siblings(".description").children()[0]);
+    dayPlanned[save].reminder = $(this).siblings(".description").children()[0].value;
+    console.log($(this).siblings(".description").children()[0].value)
     saveData();
     displayData();
 })
